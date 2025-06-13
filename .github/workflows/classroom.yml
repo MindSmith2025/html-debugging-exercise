@@ -1,0 +1,34 @@
+name: Autograding Tests
+on:
+  push:
+  repository_dispatch:
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Test 1 - Correct title tag (not tittle)
+        run: grep -q '<title>' index.html
+      - name: Test 2 - IMG src attribute (not sorc)  
+        run: grep -q 'src="images/dex.png"' index.html
+      - name: Test 3 - IMG has alt attribute
+        run: grep -q 'alt=' index.html
+      - name: Test 4 - Paragraph tag closed
+        run: grep -q '</p>' index.html
+      - name: Test 5 - H2 tags closed
+        run: grep -q '</h2>' index.html
+      - name: Test 6 - H3 tags closed  
+        run: grep -q '</h3>' index.html
+      - name: Test 7 - Correct p tag (not para)
+        run: grep -q '<p>' index.html
+      - name: Test 8 - No invalid para tags
+        run: '! grep -q "<para>" index.html'
+      - name: Test 9 - NASA link has correct href
+        run: grep -q 'href="https://www.nasa.gov/"' index.html
+      - name: Test 10 - H1 tag is in body section
+        run: sed -n '/<body>/,/<\/body>/p' index.html | grep -q '<h1>'
