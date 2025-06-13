@@ -1,0 +1,43 @@
+name: Autograding Tests
+'on':
+  - push
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Autograding
+        id: autograding
+        uses: education/autograding@v1
+        with:
+          tests:
+            - name: 'Bug 1: Check for DOCTYPE declaration'
+              run: grep -q '<!DOCTYPE html>' index.html
+              points: 2
+            - name: 'Bug 2: Check for <h1> in the body'
+              run: grep -q '<body>\s*<h1>' index.html
+              points: 2
+            - name: 'Bug 3: Check for correctly closed <h1> tag'
+              run: grep -q '</h1>' index.html
+              points: 1
+            - name: 'Bug 4: Check for correct <img> src attribute'
+              run: grep -q '<img src="images/dex.png"' index.html
+              points: 2
+            - name: 'Bug 5: Check for missing alt attribute on <img>'
+              run: grep -q '<img src="images/dex.png" alt=".*"' index.html
+              points: 2
+            - name: 'Bug 6: Check for correctly closed <h2> tag'
+              run: grep -q '</h2>' index.html
+              points: 1
+            - name: 'Bug 7: Check for correct <p> tag'
+              run: grep -q '<p>' index.html
+              points: 1
+            - name: 'Bug 8: Check for correct link (href attribute)'
+              run: grep -q '<a href="https://www.nasa.gov/">' index.html
+              points: 1
