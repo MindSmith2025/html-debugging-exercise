@@ -10,23 +10,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Test 1 - Correct title tag (not tittle)
+      - name: HTML Structure Check A
         run: grep -q '<title>' index.html
-      - name: Test 2 - IMG src attribute (not sorc)  
+      - name: HTML Element Check B
         run: grep -q 'src="images/dex.png"' index.html
-      - name: Test 3 - IMG has alt attribute
+      - name: HTML Attribute Check C
         run: grep -q 'alt=' index.html
-      - name: Test 4 - Paragraph tag closed
+      - name: HTML Tag Validation D
         run: grep -q '</p>' index.html
-      - name: Test 5 - H2 tags closed
+      - name: HTML Syntax Check E
         run: grep -q '</h2>' index.html
-      - name: Test 6 - H3 tags closed  
+      - name: HTML Format Check F
         run: grep -q '</h3>' index.html
-      - name: Test 7 - Correct p tag (not para)
+      - name: HTML Element Check G
         run: grep -q '<p>' index.html
-      - name: Test 8 - No invalid para tags
+      - name: HTML Validation Check H
         run: '! grep -q "<para>" index.html'
-      - name: Test 9 - NASA link has correct href
+      - name: HTML Link Check I
         run: grep -q 'href="https://www.nasa.gov/"' index.html
-      - name: Test 10 - H1 tag is in body section
+      - name: HTML Structure Check J
         run: sed -n '/<body>/,/<\/body>/p' index.html | grep -q '<h1>'
